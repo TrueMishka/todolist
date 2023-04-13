@@ -7,20 +7,20 @@ export const todolistsApi = {
 	getTodolists() {
 		return instance.get<TodolistType[]>('todo-lists');
 	},
-	createTodolist(title: string) {
-		return instance.post<ResponseType<{ item: TodolistType }>>('todo-lists', {title: title});
+	createTodolist(arg: CreateTodolistArgType) {
+		return instance.post<ResponseType<{ item: TodolistType }>>('todo-lists', {title: arg.title});
 	},
-	deleteTodolist(id: string) {
-		return instance.delete<ResponseType>(`todo-lists/${id}`);
+	deleteTodolist(arg: RemoveTodolistArgType) {
+		return instance.delete<ResponseType>(`todo-lists/${arg.todolistId}`);
 	},
-	updateTodolist(id: string, title: string) {
-		return instance.put<ResponseType>(`todo-lists/${id}`, {title: title});
+	updateTodolist(arg: UpdateTodolistArgType) {
+		return instance.put<ResponseType>(`todo-lists/${arg.todolistId}`, {title: arg.title});
 	},
 	getTasks(todolistId: string) {
 		return instance.get<GetTasksResponse>(`todo-lists/${todolistId}/tasks`);
 	},
-	deleteTask(todolistId: string, taskId: string) {
-		return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`);
+	deleteTask(arg: RemoveTaskArgType) {
+		return instance.delete<ResponseType>(`todo-lists/${arg.todolistId}/tasks/${arg.taskId}`);
 	},
 	createTask(arg: AddTaskArgType) {
 		return instance.post<ResponseType<{
@@ -72,8 +72,24 @@ export type AddTaskArgType = {
 	todolistId: string
 }
 
+export type RemoveTaskArgType = {
+	taskId: string
+	todolistId: string
+}
+
 export type UpdateTaskArgType = {
 	taskId: string,
 	domainModel: UpdateDomainTaskModelType,
 	todolistId: string
+}
+
+export type RemoveTodolistArgType = {
+	todolistId: string
+}
+export type CreateTodolistArgType = {
+	title: string
+}
+export type UpdateTodolistArgType = {
+	todolistId: string
+	title: string
 }

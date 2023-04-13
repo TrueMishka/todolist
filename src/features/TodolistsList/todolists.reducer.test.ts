@@ -1,7 +1,7 @@
 import {
 	FilterValuesType,
 	TodolistDomainType, todolistsActions,
-	todolistsReducer
+	todolistsReducer, todolistsThunks
 } from 'features/TodolistsList/todolists.reducer'
 import { v1 } from 'uuid'
 import { RequestStatusType } from 'app/app.reducer'
@@ -21,32 +21,45 @@ beforeEach(() => {
 })
 
 test('correct todolist should be removed', () => {
-	const endState = todolistsReducer(startState, todolistsActions.removeTodolist({id: todolistId1}))
+	const arg = {todolistId: 'todolistId2'}
+	const action = todolistsThunks.removeTodolist.fulfilled(
+		arg,
+		'requestId',
+		arg
+	)
+
+	const endState = todolistsReducer(startState, action)
 
 	expect(endState.length).toBe(1)
 	expect(endState[0].id).toBe(todolistId2)
 })
 
 test('correct todolist should be added', () => {
-	let todolist: TodolistType = {
-		title: 'New Todolist',
-		id: 'any id',
-		addedDate: '',
-		order: 0
+	const args = {
+		todolist: {
+			title: 'New Todolist',
+			id: 'any id',
+			addedDate: '',
+			order: 0
+		}
 	}
+	const action = todolistsThunks.addTodolist.fulfilled(args, 'requestId', {title: 'New Todolist'})
 
-
-	const endState = todolistsReducer(startState, todolistsActions.addTodolist({todolist}))
+	const endState = todolistsReducer(startState, action)
 
 	expect(endState.length).toBe(3)
-	expect(endState[0].title).toBe(todolist.title)
+	expect(endState[0].title).toBe(args.todolist.title)
 	expect(endState[0].filter).toBe('all')
 })
 
 test('correct todolist should change its name', () => {
 	let newTodolistTitle = 'New Todolist'
+	const args = {
+		todolistId: todolistId2,
+		title: newTodolistTitle
+	}
 
-	const action = todolistsActions.changeTodolistTitle({id: todolistId2, title: newTodolistTitle})
+	const action = todolistsThunks.changeTodolistTitle.fulfilled(args, 'requestId', args)
 
 	const endState = todolistsReducer(startState, action)
 
@@ -65,8 +78,8 @@ test('correct filter of todolist should be changed', () => {
 	expect(endState[1].filter).toBe(newFilter)
 })
 test('todolists should be added', () => {
-
-	const action = todolistsActions.setTodolists({todolists: startState})
+	const action = todolistsThunks.fetchTodolists.fulfilled(
+		{todolists: startState}, 'requestId')
 
 	const endState = todolistsReducer([], action)
 
