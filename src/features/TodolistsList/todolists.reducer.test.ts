@@ -5,11 +5,10 @@ import {
 } from 'features/TodolistsList/todolists.reducer'
 import { v1 } from 'uuid'
 import { RequestStatusType } from 'app/app.reducer'
-import { TodolistType } from './todolists.api'
 
 let todolistId1: string
 let todolistId2: string
-let startState: Array<TodolistDomainType> = []
+let startState: TodolistDomainType[] = []
 
 beforeEach(() => {
 	todolistId1 = v1()
@@ -21,7 +20,7 @@ beforeEach(() => {
 })
 
 test('correct todolist should be removed', () => {
-	const arg = {todolistId: 'todolistId2'}
+	const arg = {todolistId: todolistId1}
 	const action = todolistsThunks.removeTodolist.fulfilled(
 		arg,
 		'requestId',
@@ -77,6 +76,7 @@ test('correct filter of todolist should be changed', () => {
 	expect(endState[0].filter).toBe('all')
 	expect(endState[1].filter).toBe(newFilter)
 })
+
 test('todolists should be added', () => {
 	const action = todolistsThunks.fetchTodolists.fulfilled(
 		{todolists: startState}, 'requestId')
@@ -85,6 +85,7 @@ test('todolists should be added', () => {
 
 	expect(endState.length).toBe(2)
 })
+
 test('correct entity status of todolist should be changed', () => {
 	let newStatus: RequestStatusType = 'loading'
 
@@ -95,6 +96,3 @@ test('correct entity status of todolist should be changed', () => {
 	expect(endState[0].entityStatus).toBe('idle')
 	expect(endState[1].entityStatus).toBe(newStatus)
 })
-
-
-
