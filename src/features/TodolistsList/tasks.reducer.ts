@@ -18,17 +18,13 @@ import {thunkTryCatch} from "../../common/utils/thunk-try-catch";
 
 const fetchTasks = createAppAsyncThunk<{ tasks: TaskType[], todolistId: string }, string>
 ('tasks/fetchTasks', async (todolistId, thunkAPI) => {
-	const {dispatch, rejectWithValue} = thunkAPI
-	try {
-		dispatch(appActions.setAppStatus({status: 'loading'}))
+	const {dispatch} = thunkAPI
+	return thunkTryCatch(thunkAPI, async () => {
 		const res = await todolistsApi.getTasks(todolistId)
 		const tasks = res.data.items
 		dispatch(appActions.setAppStatus({status: 'succeeded'}))
-		return {tasks, todolistId}
-	} catch (e) {
-		handleServerNetworkError(e, dispatch)
-		return rejectWithValue(null)
-	}
+		return {tasks, todolistId}	
+	})
 })
 
 const addTask = createAppAsyncThunk<{ task: TaskType }, AddTaskArgType>
@@ -50,8 +46,7 @@ const addTask = createAppAsyncThunk<{ task: TaskType }, AddTaskArgType>
 const removeTask = createAppAsyncThunk<RemoveTaskArgType, RemoveTaskArgType>
 ('task/removeTask',async (arg, thunkAPI) => {
 	const {dispatch, rejectWithValue} = thunkAPI
-	try {
-		dispatch(appActions.setAppStatus({status: 'loading'}))
+	return thunkTryCatch(thunkAPI, async () => {
 		const res = await todolistsApi.deleteTask(arg)
 		if (res.data.resultCode === ResultCode.Success) {
 			dispatch(appActions.setAppStatus({status: 'succeeded'}))
@@ -60,17 +55,13 @@ const removeTask = createAppAsyncThunk<RemoveTaskArgType, RemoveTaskArgType>
 			handleServerAppError(res.data, dispatch);
 			return rejectWithValue(null)
 		}
-	} catch (e) {
-		handleServerNetworkError(e, dispatch)
-		return rejectWithValue(null)
-	}
+	})
 })
 
 const updateTask = createAppAsyncThunk<UpdateTaskArgType, UpdateTaskArgType>
 ('tasks/updateTask', async (arg, thunkAPI) => {
 	const {dispatch, rejectWithValue, getState} = thunkAPI
-	try {
-		dispatch(appActions.setAppStatus({status: 'loading'}))
+	return thunkTryCatch(thunkAPI,async () => {
 		const state = getState()
 		const task = state.tasks[arg.todolistId].find(t => t.id === arg.taskId)
 		if (!task) {
@@ -95,11 +86,8 @@ const updateTask = createAppAsyncThunk<UpdateTaskArgType, UpdateTaskArgType>
 		} else {
 			handleServerAppError(res.data, dispatch);
 			return rejectWithValue(null)
-		}
-	} catch (e) {
-		handleServerNetworkError(e, dispatch)
-		return rejectWithValue(null)
-	}
+		}	
+	})
 })
 
 const initialState: TasksStateType = {}
