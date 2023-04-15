@@ -13,6 +13,7 @@ import {
 	UpdateTaskModelType
 } from 'features/TodolistsList/todolists.api';
 import { ResultCode, TaskPriorities, TaskStatuses } from 'common/enums';
+import {thunkTryCatch} from "../../common/utils/thunk-try-catch";
 
 
 const fetchTasks = createAppAsyncThunk<{ tasks: TaskType[], todolistId: string }, string>
@@ -33,8 +34,7 @@ const fetchTasks = createAppAsyncThunk<{ tasks: TaskType[], todolistId: string }
 const addTask = createAppAsyncThunk<{ task: TaskType }, AddTaskArgType>
 ('tasks/addTask', async (arg, thunkAPI) => {
 	const {dispatch, rejectWithValue} = thunkAPI
-	try {
-		dispatch(appActions.setAppStatus({status: 'loading'}))
+	return thunkTryCatch(thunkAPI, async () => {
 		const res = await todolistsApi.createTask(arg)
 		if (res.data.resultCode === ResultCode.Success) {
 			const task = res.data.data.item
@@ -44,10 +44,7 @@ const addTask = createAppAsyncThunk<{ task: TaskType }, AddTaskArgType>
 			handleServerAppError(res.data, dispatch);
 			return rejectWithValue(null)
 		}
-	} catch (e) {
-		handleServerNetworkError(e, dispatch)
-		return rejectWithValue(null)
-	}
+	})
 })
 
 const removeTask = createAppAsyncThunk<RemoveTaskArgType, RemoveTaskArgType>
@@ -110,9 +107,7 @@ const initialState: TasksStateType = {}
 const slice = createSlice({
 	name: 'tasks',
 	initialState,
-	reducers: {
-
-	},
+	reducers: {},
 	extraReducers: builder => {
 		builder
 			.addCase(fetchTasks.fulfilled, (state, action) => {
@@ -152,7 +147,6 @@ const slice = createSlice({
 })
 
 export const tasksReducer = slice.reducer
-export const tasksActions = slice.actions
 export const tasksThunks = {fetchTasks, addTask, updateTask, removeTask}
 
 // types
@@ -165,5 +159,5 @@ export type UpdateDomainTaskModelType = {
 	deadline?: string
 }
 export type TasksStateType = {
-	[key: string]: Array<TaskType>
+	[key: string]: TaskType[]
 }

@@ -1,12 +1,19 @@
-import { Dispatch } from 'redux';
-import { appActions } from 'app/app.reducer';
-import { ResponseType } from 'common/types/common.types';
+import {Dispatch} from 'redux';
+import {appActions} from 'app/app.reducer';
+import {ResponseType} from '../types';
 
-export const handleServerAppError = <D>(data: ResponseType<D>, dispatch: Dispatch) => {
-	if (data.messages.length) {
-		dispatch(appActions.setAppError({error: data.messages[0]}))
-	} else {
-		dispatch(appActions.setAppError({error: 'Some error occurred'}))
-	}
-	dispatch(appActions.setAppStatus({status: 'failed'}))
+/**
+ * This function handles errors that may occur when communicating with the server.
+ * @param data - response from the server in ResponseType<D> format
+ * @param dispatch - function for sending messages in store Redux
+ * @param showError - a flag that specifies whether errors should be displayed in the user interface
+ */
+export const handleServerAppError = <D>(data: ResponseType<D>, dispatch: Dispatch, showError: boolean = true) => {
+    if (showError) {
+        dispatch(appActions.setAppError({
+            error: data.messages.length
+                ? data.messages[0]
+                : 'Some error occurred'
+        }))
+    }
 }
