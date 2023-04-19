@@ -11,3 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.MuiInputBase-input:-webkit-autofill {
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-box-shadow: none !important;
+}

@@ -2,11 +2,10 @@ import React, {useCallback, useEffect} from 'react'
 import {useSelector} from 'react-redux'
 import {FilterValuesType, todolistsActions, todolistsThunks} from 'features/TodolistsList/todolists.reducer'
 import {tasksThunks} from 'features/TodolistsList/tasks.reducer'
-import {Grid, Paper} from '@mui/material'
+import {Box, Grid, Paper} from '@mui/material'
 import {AddItemForm} from 'common/components'
 import {Todolist} from './Todolist/Todolist'
 import {Navigate} from 'react-router-dom'
-import {useAppDispatch} from 'common/hooks/useAppDispatch';
 import {selectIsLoggedIn} from 'features/auth/auth.selectors';
 import {selectTasks} from 'features/TodolistsList/tasks.selectors';
 import {selectTodolists} from 'features/TodolistsList/todolists.selectors';
@@ -81,17 +80,17 @@ export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
         return <Navigate to={'/login'}/>
     }
 
-    return <>
-        <Grid container style={{padding: '20px'}}>
+    return <Box sx={{paddingBottom: '50px'}}>
+        <Grid container style={{padding: '30px'}} justifyContent={'center'}>
             <AddItemForm addItem={addTodolist}/>
         </Grid>
-        <Grid container spacing={3}>
+        <Grid container spacing={3} justifyContent="center">
             {
                 todolists.map(tl => {
                     let allTodolistTasks = tasks[tl.id]
 
                     return <Grid item key={tl.id}>
-                        <Paper style={{padding: '10px'}}>
+                        <Paper style={{padding: '10px', maxWidth: '350px'}}>
                             <Todolist
                                 todolist={tl}
                                 tasks={allTodolistTasks}
@@ -109,5 +108,5 @@ export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
                 })
             }
         </Grid>
-    </>
+    </Box>
 }
