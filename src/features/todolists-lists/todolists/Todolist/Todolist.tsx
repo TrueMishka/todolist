@@ -10,29 +10,29 @@ import { Tasks } from './Tasks/Tasks';
 import { TodolistTitle } from './TodolistTitle/TodolistTitle';
 
 type PropsType = {
-    todolist: TodolistDomainType;
-    tasks: TaskType[];
+  todolist: TodolistDomainType;
+  tasks: TaskType[];
 };
 
 export const Todolist: FC<PropsType> = memo(({ todolist, tasks }) => {
-    const { fetchTasks, addTask } = useActions(tasksThunks);
+  const { fetchTasks, addTask } = useActions(tasksThunks);
 
-    useEffect(() => {
-        fetchTasks(todolist.id);
-    }, []);
+  useEffect(() => {
+    fetchTasks(todolist.id);
+  }, []);
 
-    const addTaskCallback = (title: string) => {
-        return addTask({ title, todolistId: todolist.id }).unwrap();
-    };
+  const addTaskCallback = (title: string) => {
+    return addTask({ title, todolistId: todolist.id }).unwrap();
+  };
 
-    return (
-        <Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
-            <TodolistTitle todolist={todolist} />
-            <AddItemForm addItem={addTaskCallback} disabled={todolist.entityStatus === 'loading'} />
-            <Box padding={'16px 0px'}>
-                <Tasks todolist={todolist} tasks={tasks} />
-            </Box>
-            <FilterTasksButtons todolist={todolist} />
-        </Box>
-    );
+  return (
+    <Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
+      <TodolistTitle todolist={todolist} />
+      <AddItemForm addItem={addTaskCallback} disabled={todolist.entityStatus === 'loading'} />
+      <Box padding={'16px 0px'}>
+        <Tasks todolist={todolist} tasks={tasks} />
+      </Box>
+      <FilterTasksButtons todolist={todolist} />
+    </Box>
+  );
 });

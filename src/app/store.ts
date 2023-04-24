@@ -7,14 +7,14 @@ import { authReducer } from 'features/auth/auth.reducer';
 import { configureStore } from '@reduxjs/toolkit';
 
 const rootReducer = combineReducers({
-    tasks: tasksReducer,
-    todolists: todolistsReducer,
-    app: appReducer,
-    auth: authReducer,
+  tasks: tasksReducer,
+  todolists: todolistsReducer,
+  app: appReducer,
+  auth: authReducer,
 });
 
 export const store = configureStore({
-    reducer: rootReducer,
+  reducer: rootReducer,
 });
 
 export type AppRootStateType = ReturnType<typeof rootReducer>;

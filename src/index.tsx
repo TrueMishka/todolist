@@ -8,19 +8,19 @@ import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { deepOrange, orange } from '@mui/material/colors';
 
 const darkTheme = createTheme({
-    palette: {
-        mode: 'dark',
-        primary: deepOrange,
-        secondary: orange,
-    },
+  palette: {
+    mode: 'dark',
+    primary: deepOrange,
+    secondary: orange,
+  },
 });
 
 const root = createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-    <Provider store={store}>
-        <ThemeProvider theme={darkTheme}>
-            <CssBaseline />
-            <App />
-        </ThemeProvider>
-    </Provider>
+  <Provider store={store}>
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <App />
+    </ThemeProvider>
+  </Provider>
 );

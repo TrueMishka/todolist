@@ -11,42 +11,42 @@ import { selectTodolists } from 'features/todolists-lists/todolists/todolists.se
 import { useActions } from '../../common/hooks/useActions';
 
 export const TodolistsList = () => {
-    const todolists = useSelector(selectTodolists);
-    const tasks = useSelector(selectTasks);
-    const isLoggedIn = useSelector(selectIsLoggedIn);
+  const todolists = useSelector(selectTodolists);
+  const tasks = useSelector(selectTasks);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
-    const { fetchTodolists, addTodolist } = useActions(todolistsThunks);
+  const { fetchTodolists, addTodolist } = useActions(todolistsThunks);
 
-    useEffect(() => {
-        fetchTodolists({});
-    }, []);
+  useEffect(() => {
+    fetchTodolists({});
+  }, []);
 
-    const addTodolistCallback = useCallback((title: string) => {
-        return addTodolist({ title }).unwrap();
-    }, []);
+  const addTodolistCallback = useCallback((title: string) => {
+    return addTodolist({ title }).unwrap();
+  }, []);
 
-    if (!isLoggedIn) {
-        return <Navigate to={'/login'} />;
-    }
+  if (!isLoggedIn) {
+    return <Navigate to={'/login'} />;
+  }
 
-    return (
-        <Box sx={{ paddingBottom: '50px' }}>
-            <Grid container style={{ padding: '30px' }} justifyContent={'center'}>
-                <AddItemForm addItem={addTodolistCallback} />
+  return (
+    <Box sx={{ paddingBottom: '50px' }}>
+      <Grid container style={{ padding: '30px' }} justifyContent={'center'}>
+        <AddItemForm addItem={addTodolistCallback} />
+      </Grid>
+      <Grid container spacing={3} justifyContent='center'>
+        {todolists.map((tl) => {
+          let allTodolistTasks = tasks[tl.id];
+
+          return (
+            <Grid item key={tl.id}>
+              <Paper style={{ padding: '10px', maxWidth: '350px' }}>
+                <Todolist todolist={tl} tasks={allTodolistTasks} />
+              </Paper>
             </Grid>
-            <Grid container spacing={3} justifyContent='center'>
-                {todolists.map((tl) => {
-                    let allTodolistTasks = tasks[tl.id];
-
-                    return (
-                        <Grid item key={tl.id}>
-                            <Paper style={{ padding: '10px', maxWidth: '350px' }}>
-                                <Todolist todolist={tl} tasks={allTodolistTasks} />
-                            </Paper>
-                        </Grid>
-                    );
-                })}
-            </Grid>
-        </Box>
-    );
+          );
+        })}
+      </Grid>
+    </Box>
+  );
 };
