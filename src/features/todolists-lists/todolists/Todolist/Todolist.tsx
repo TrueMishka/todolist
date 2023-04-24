@@ -3,11 +3,11 @@ import { AddItemForm } from 'common/components/AddItemForm/AddItemForm';
 import { TodolistDomainType } from 'features/todolists-lists/todolists/todolists.reducer';
 import { Box } from '@mui/material';
 import { tasksThunks } from 'features/todolists-lists/tasks/tasks.reducer';
-import { TaskType } from '../../tasks/tasks.api';
 import { useActions } from 'common/hooks/useActions';
 import { FilterTasksButtons } from './FilterTasksButtons';
 import { Tasks } from './Tasks/Tasks';
 import { TodolistTitle } from './TodolistTitle/TodolistTitle';
+import { TaskType } from 'features/todolists-lists/tasks/tasks.api';
 
 type PropsType = {
   todolist: TodolistDomainType;

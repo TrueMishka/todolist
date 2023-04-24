@@ -8,7 +8,7 @@ import { Navigate } from 'react-router-dom';
 import { selectIsLoggedIn } from 'features/auth/auth.selectors';
 import { selectTasks } from 'features/todolists-lists/tasks/tasks.selectors';
 import { selectTodolists } from 'features/todolists-lists/todolists/todolists.selectors';
-import { useActions } from '../../common/hooks/useActions';
+import { useActions } from 'common/hooks';
 
 export const TodolistsList = () => {
   const todolists = useSelector(selectTodolists);

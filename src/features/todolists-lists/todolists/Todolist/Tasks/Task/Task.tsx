@@ -3,9 +3,9 @@ import { Box, Checkbox, IconButton } from '@mui/material';
 import { EditableSpan } from 'common/components/EditableSpan/EditableSpan';
 import { Delete } from '@mui/icons-material';
 import { TaskStatuses } from 'common/enums';
-import { TaskType } from '../../../../tasks/tasks.api';
-import { useActions } from '../../../../../../common/hooks/useActions';
-import { tasksThunks } from '../../../../tasks/tasks.reducer';
+import { useActions } from 'common/hooks';
+import { TaskType } from 'features/todolists-lists/tasks/tasks.api';
+import { tasksThunks } from 'features/todolists-lists/tasks/tasks.reducer';
 import s from './styles.module.css';
 
 type PropsType = {

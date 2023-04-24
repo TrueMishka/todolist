@@ -19,8 +19,8 @@ import {
 import { selectIsLoggedIn } from 'features/auth/auth.selectors';
 import { authThunk } from '../auth.reducer';
 import { LoginParamsType } from '../auth.api';
-import { ResponseType } from '../../../common/types';
-import { useActions } from '../../../common/hooks/useActions';
+import { ResponseType } from 'common/types';
+import { useActions } from 'common/hooks';
 
 export const Login = () => {
   const { login } = useActions(authThunk);
@@ -49,44 +49,6 @@ export const Login = () => {
         }
       });
   };
-
-  // const formik = useFormik({
-  //     validate: (values) => {
-  //         if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-  //             return {
-  //                 email: "Email isn't valid"
-  //             }
-  //         }
-  //         // if (!values.email) {
-  //         //     return {
-  //         //         email: 'Email is required'
-  //         //     }
-  //         // }
-  //         // if (!values.password) {
-  //         //     return {
-  //         //         password: 'Password is required'
-  //         //     }
-  //         // }
-  //     },
-  //     initialValues: {
-  //         email: '',
-  //         password: '',
-  //         rememberMe: false
-  //     },
-  //     validateOnChange: false,
-  //     onSubmit: (values, formikHelpers: FormikHelpers<LoginParamsType>) => {
-  //         dispatch(authThunk.login(values))
-  //             .unwrap()
-  //             .catch((reason: ResponseType) => {
-  //                 const {fieldsErrors} = reason
-  //                 if (fieldsErrors) {
-  //                     reason.fieldsErrors.forEach((fieldError) => {
-  //                         formikHelpers.setFieldError(fieldError.field, fieldError.error)
-  //                     })
-  //                 }
-  //             })
-  //     },
-  // })
 
   if (isLoggedIn) {
     return <Navigate to={'/'} />;
@@ -148,53 +110,4 @@ export const Login = () => {
       </FormControl>
     </Grid>
   );
-
-  // return (
-  //     <Grid container justifyContent="center">
-  //         <form onSubmit={formik.handleSubmit}>
-  //             <FormControl>
-  //                 <FormLabel>
-  //                     <h3>Login</h3>
-  //                 </FormLabel>
-  //                 <FormGroup>
-  //                     <TextField
-  //                         label="Email"
-  //                         margin="normal"
-  //                         {...formik.getFieldProps("email")}
-  //                     />
-  //                     {formik.errors.email && formik.touched.email ? <div>{formik.errors.email}</div> : null}
-  //                     <TextField
-  //                         type="password"
-  //                         label="Password"
-  //                         margin="normal"
-  //                         {...formik.getFieldProps("password")}
-  //                     />
-  //                     {formik.errors.password && formik.touched.password ? <div>{formik.errors.password}</div> : null}
-  //                     <FormControlLabel
-  //                         label={'Remember me'}
-  //                         control={<Checkbox
-  //                             {...formik.getFieldProps("rememberMe")}
-  //                             checked={formik.values.rememberMe}
-  //                         />}
-  //                     />
-  //                     <Button type={'submit'} variant={'contained'} color={'primary'}>Login</Button>
-  //                 </FormGroup>
-  //                 <FormHelperText>
-  //                     <p>
-  //                         To log in get registered <Link href={'https://social-network.samuraijs.com/'}
-  //                                                        target={'_blank'}>here</Link>
-  //                     </p>
-  //                     <p>
-  //                         or use common test account credentials:
-  //                     </p>
-  //                     <p> Email: free@samuraijs.com
-  //                     </p>
-  //                     <p>
-  //                         Password: free
-  //                     </p>
-  //                 </FormHelperText>
-  //             </FormControl>
-  //         </form>
-  //     </Grid>
-  // )
 };

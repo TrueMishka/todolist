@@ -1,8 +1,8 @@
 import React, { FC, memo } from 'react';
-import { TodolistDomainType } from '../../todolists.reducer';
-import { TaskType } from '../../../tasks/tasks.api';
 import { TaskStatuses } from 'common/enums';
 import { Task } from './Task/Task';
+import { TodolistDomainType } from 'features/todolists-lists/todolists/todolists.reducer';
+import { TaskType } from 'features/todolists-lists/tasks/tasks.api';
 
 type PropsType = {
   todolist: TodolistDomainType;

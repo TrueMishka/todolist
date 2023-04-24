@@ -2,8 +2,11 @@ import React, { FC, memo } from 'react';
 import { EditableSpan } from 'common/components';
 import { IconButton, Typography } from '@mui/material';
 import { Delete } from '@mui/icons-material';
-import { TodolistDomainType, todolistsThunks } from '../../todolists.reducer';
 import { useActions } from 'common/hooks/useActions';
+import {
+  TodolistDomainType,
+  todolistsThunks,
+} from 'features/todolists-lists/todolists/todolists.reducer';
 
 type PropsType = {
   todolist: TodolistDomainType;

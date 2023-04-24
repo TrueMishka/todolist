@@ -11,7 +11,7 @@ import {
   UpdateTaskArgType,
   UpdateTaskModelType,
 } from './tasks.api';
-import { appActions } from '../../../app/app.reducer';
+import { appActions } from 'app/app.reducer';
 
 const fetchTasks = createAppAsyncThunk<{ tasks: TaskType[]; todolistId: string }, string>(
   'tasks/fetchTasks',

@@ -1,7 +1,11 @@
 import React, { FC, memo } from 'react';
 import { Button } from '@mui/material';
-import { FilterValuesType, TodolistDomainType, todolistsActions } from '../todolists.reducer';
 import { useActions } from 'common/hooks/useActions';
+import {
+  FilterValuesType,
+  TodolistDomainType,
+  todolistsActions,
+} from 'features/todolists-lists/todolists/todolists.reducer';
 
 type PropsType = {
   todolist: TodolistDomainType;
