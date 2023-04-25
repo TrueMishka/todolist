@@ -32,17 +32,15 @@ export const TodolistsList = () => {
   return (
     <Box sx={{ paddingBottom: '50px' }}>
       <Grid container style={{ padding: '30px' }} justifyContent={'center'}>
-        <AddItemForm addItem={addTodolistCallback} />
+        <AddItemForm addItem={addTodolistCallback} label={'Add new todo'} />
       </Grid>
-      <Grid container spacing={3} justifyContent='center'>
+      <Grid container spacing={3} justifyContent='center' alignItems={'flex-start'}>
         {todolists.map((tl) => {
           let allTodolistTasks = tasks[tl.id];
 
           return (
             <Grid item key={tl.id}>
-              <Paper style={{ padding: '10px', maxWidth: '350px' }}>
-                <Todolist todolist={tl} tasks={allTodolistTasks} />
-              </Paper>
+              <Todolist todolist={tl} tasks={allTodolistTasks} />
             </Grid>
           );
         })}

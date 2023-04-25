@@ -58,7 +58,7 @@ export const Login = () => {
     <Grid container justifyContent='center' paddingTop={'20px'}>
       <FormControl>
         <FormLabel focused={false}>
-          <Typography variant='h3' sx={{ fontSize: '24px', fontWeight: 'bold' }}>
+          <Typography variant='h3' component='div' sx={{ fontSize: '24px', fontWeight: 'bold' }}>
             Login
           </Typography>
         </FormLabel>
@@ -93,7 +93,7 @@ export const Login = () => {
                   Login
                 </Button>
               </FormGroup>
-              <FormHelperText>
+              <FormHelperText component='div'>
                 <p>
                   To log in get registered{' '}
                   <Link href={'https://social-network.samuraijs.com/'} target={'_blank'}>

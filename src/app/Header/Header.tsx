@@ -1,17 +1,18 @@
 import React from 'react';
-import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
-import { Menu } from '@mui/icons-material';
+import { AppBar, Grid, IconButton, Toolbar, Typography } from '@mui/material';
+import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { ProgressBar } from 'common/components';
 import { useSelector } from 'react-redux';
 import { selectAppStatus } from 'app/app.selectors';
-import { selectIsLoggedIn } from 'features/auth/auth.selectors';
+import { selectIsLoggedIn, selectUserLogin } from 'features/auth/auth.selectors';
 import { useActions } from 'common/hooks';
 import { authThunk } from 'features/auth/auth.reducer';
 
 export const Header = () => {
   const status = useSelector(selectAppStatus);
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  const userLogin = useSelector(selectUserLogin);
 
   const { logout } = useActions(authThunk);
   const logoutHandler = () => logout({});
@@ -19,18 +20,19 @@ export const Header = () => {
   return (
     <AppBar position='static'>
       <Toolbar>
-        <IconButton edge='start' color='inherit' aria-label='menu'>
-          <Menu />
-        </IconButton>
+        <PlaylistAddCheckIcon fontSize={'large'} />
         <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
-          To Do
+          To-Do List
         </Typography>
         {isLoggedIn && (
-          <div>
+          <Grid sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <Typography variant='h6' component='div' sx={{ fontSize: '18px', flexGrow: 1 }}>
+              {userLogin}
+            </Typography>
             <IconButton color='inherit' aria-label='logout' onClick={logoutHandler}>
               <LogoutIcon />
             </IconButton>
-          </div>
+          </Grid>
         )}
       </Toolbar>
       {status === 'loading' && <ProgressBar />}

@@ -5,10 +5,11 @@ import { RejectValueType } from 'common/utils/create-app-async-thunk';
 
 type PropsType = {
   addItem: (title: string) => Promise<any>;
+  label?: string;
   disabled?: boolean;
 };
 
-export const AddItemForm: FC<PropsType> = memo(({ addItem, disabled = false }) => {
+export const AddItemForm: FC<PropsType> = memo(({ addItem, label = 'Title', disabled = false }) => {
   let [title, setTitle] = useState('');
   let [error, setError] = useState<string | null>(null);
 
@@ -37,13 +38,10 @@ export const AddItemForm: FC<PropsType> = memo(({ addItem, disabled = false }) =
     if (error !== null) {
       setError(null);
     }
-    if (e.charCode === 13) {
+    if (e.key === 'Enter') {
       addItemHandler();
     }
   };
-
-  // TODO
-  // Add dot text
 
   return (
     <Box>
@@ -54,13 +52,17 @@ export const AddItemForm: FC<PropsType> = memo(({ addItem, disabled = false }) =
         error={!!error}
         value={title}
         onChange={onChangeHandler}
-        onKeyPress={onKeyPressHandler}
-        label='Title'
+        onKeyDown={onKeyPressHandler}
+        label={label}
         helperText={error}
+        InputProps={{
+          endAdornment: (
+            <IconButton color='primary' onClick={addItemHandler} disabled={disabled}>
+              <AddBox />
+            </IconButton>
+          ),
+        }}
       />
-      <IconButton color='primary' onClick={addItemHandler} disabled={disabled}>
-        <AddBox />
-      </IconButton>
     </Box>
   );
 });

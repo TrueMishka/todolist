@@ -1,7 +1,6 @@
 import React, { FC, memo } from 'react';
 import { EditableSpan } from 'common/components';
-import { IconButton, Typography } from '@mui/material';
-import { Delete } from '@mui/icons-material';
+import { Typography } from '@mui/material';
 import { useActions } from 'common/hooks/useActions';
 import {
   TodolistDomainType,
@@ -13,22 +12,19 @@ type PropsType = {
 };
 
 export const TodolistTitle: FC<PropsType> = memo(({ todolist }) => {
-  const { removeTodolist, changeTodolistTitle } = useActions(todolistsThunks);
-
-  const removeTodolistCallback = () => {
-    removeTodolist({ todolistId: todolist.id });
-  };
+  const { changeTodolistTitle } = useActions(todolistsThunks);
 
   const changeTodolistTitleCallback = (title: string) => {
     changeTodolistTitle({ todolistId: todolist.id, title });
   };
 
   return (
-    <Typography variant='h3' align='center' sx={{ fontSize: '24px', fontWeight: 'bold', p: 2 }}>
+    <Typography
+      variant='h3'
+      align='center'
+      sx={{ fontSize: '24px', fontWeight: 'bold', p: 2, wordWrap: 'break-word', width: '300px' }}
+    >
       <EditableSpan value={todolist.title} onChange={changeTodolistTitleCallback} />
-      <IconButton onClick={removeTodolistCallback} disabled={todolist.entityStatus === 'loading'}>
-        <Delete />
-      </IconButton>
     </Typography>
   );
 });
